@@ -1,7 +1,7 @@
 resource "aws_security_group" "main" {
   name        = "lab-sg"
   description = "Allow SSH, HTTP and SQL traffic"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = module.lab_vpc.vpc_id
 
   ingress {
     from_port   = 22
