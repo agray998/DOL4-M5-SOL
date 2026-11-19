@@ -17,4 +17,5 @@ module "lab_instance" {
   sn_id = module.public_subnet[count.index].sn_id
   sg_id = aws_security_group.main.id
   instance_name = "lab-instance-${count.index}"
+  key_name = "lab-key-${count.index}"
 }

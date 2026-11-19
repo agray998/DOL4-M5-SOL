@@ -4,6 +4,6 @@ resource "tls_private_key" "pk" {
 
 
 resource "aws_key_pair" "main" {
-  key_name   = "lab5-key"
+  key_name   = var.key_name
   public_key = tls_private_key.pk.public_key_openssh
 }
