@@ -1,8 +1,77 @@
 - hosts: all
   become: true
   tasks:
-  - name: install nginx
+  - name: install wget
     apt:
-      pkg: nginx
+      pkg: wget
       state: present
       update_cache: true
+
+- hosts: unzip_hosts
+  gather_facts: false
+  become: true
+  tasks:
+  - name: install unzip
+    apt:
+      name: unzip
+      state: present
+      update_cache: true
+
+- hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+  - name: install nginx
+    apt:
+      name: nginx
+      state: present
+      update_cache: true
+    register: nginx_json
+  - name: print JSON
+    debug:
+      msg: "{{ nginx_json }}"
+
+- hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+  - name: configure index
+    copy:
+      src: "{{ hostvars[inventory_hostname]['index_file'] }}.html"
+      dest: /var/www/html/index.html
+  - name: restart nginx
+    service:
+      name: nginx
+      state: restarted
+
+- hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+  - name: configure docker repo
+    deb822_repository:
+      name: docker
+      types: deb
+      uris: https://download.docker.com/linux/ubuntu
+      suites:
+      - resolute
+      components:
+      - stable
+      signed_by: https://download.docker.com/linux/ubuntu/gpg
+
+  - name: install docker
+    apt:
+      update_cache: true
+      name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+      - docker-buildx-plugin
+      state: present
+  - name: add to docker group
+    user:
+      append: true
+      groups:
+      - docker
+      name: ubuntu

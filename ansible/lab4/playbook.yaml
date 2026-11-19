@@ -1,8 +1,13 @@
 - hosts: all
+  vars:
+    var1: val1
   become: true
   tasks:
-  - name: install nginx
+  - name: print var
+    debug:
+       msg: "{{ ansible_facts }}"
+  - name: install package
     apt:
-      pkg: nginx
+      name: "{{ var1 }}"
       state: present
       update_cache: true
