@@ -9,3 +9,5 @@ variable "instance_name" {
 variable "key_name" {
   default = "lab-key"
 }
+
+variable "role" {}

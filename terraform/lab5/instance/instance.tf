@@ -7,5 +7,6 @@ resource "aws_instance" "main" {
   subnet_id                   = var.sn_id
   tags = {
     Name = var.instance_name
+    Role = var.role
   }
 }

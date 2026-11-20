@@ -1,0 +1,15 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for dev
+- name: install dev tools
+  apt:
+    name:
+    - zsh
+    - openjdk-21-jdk
+    - git
+    state: present
+    update_cache: true
+- name: clone repo
+  git:
+    repo: "{{ dev_repo }}"
+    dest: /home/ubuntu/dev

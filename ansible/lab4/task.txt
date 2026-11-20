@@ -1,0 +1,7 @@
+Using a combination of Global vars, playbook vars, and handlers, create a new playbook that does the following tasks: 
+-  Prints your name to the console
+-  Clones down a repo specified at command line
+-  Installs a package specified at command line (unzip if no specified package)
+-  Installs nginx and uses handlers to restart
+-  Creates a new file and appends text (command line chosen) 
+

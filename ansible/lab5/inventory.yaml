@@ -1,5 +1,16 @@
 all:
-  hosts:
-    13.41.225.184:
-      ansible_ssh_private_key_file: ansible_key.pem
-      ansible_user: ubuntu
+  children:
+    unzip_hosts:
+      hosts:
+        16.60.182.148:
+          ansible_ssh_private_key_file: ~/ansible_key_1.pem
+          ansible_user: ubuntu
+      vars:
+        foo: bar
+    nginx_hosts:
+      hosts:
+        18.169.238.19:
+          ansible_user: ubuntu
+          ansible_ssh_private_key_file: ~/ansible_key_2.pem
+      vars:
+        foo: baz

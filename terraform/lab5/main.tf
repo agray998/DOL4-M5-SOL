@@ -11,11 +11,22 @@ module "public_subnet" {
   base_cidr = "10.0"
 }
 
-module "lab_instance" {
+module "lab_instance_app" {
   count = 2
+  role = "app-servers"
   source = "./instance"
   sn_id = module.public_subnet[count.index].sn_id
   sg_id = aws_security_group.main.id
   instance_name = "lab-instance-${count.index}"
   key_name = "lab-key-${count.index}"
+}
+
+module "lab_instance_dev" {
+  count = 2
+  role = "dev-env"
+  source = "./instance"
+  sn_id = module.public_subnet[count.index].sn_id
+  sg_id = aws_security_group.main.id
+  instance_name = "lab-instance-${count.index}-dev"
+  key_name = "lab-key-${count.index}-dev"
 }

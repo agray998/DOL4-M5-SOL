@@ -1,13 +1,43 @@
 - hosts: all
-  vars:
-    var1: val1
   become: true
+  vars:
+    user_name: bob
+    repo_url: "https://github.com/{{ user_name }}/lab-repo"
+    package: unzip
+    file_content: created by ansible
+    file_path: /foo
+  handlers:
+  - name: restart nginx
+    service:
+      name: nginx
+      state: restarted
   tasks:
-  - name: print var
+  - name: print name
     debug:
-       msg: "{{ ansible_facts }}"
-  - name: install package
+      msg: "{{ user_name }}"
+  - name: ensure git
     apt:
-      name: "{{ var1 }}"
+      name: git
       state: present
       update_cache: true
+  - name: clone repo
+    git:
+      dest: /tmp/repo
+      repo: "{{ repo_url }}"
+  - name: install package
+    apt:
+      name: "{{ package }}"
+      state: present
+      update_cache: true
+  - name: install nginx
+    apt:
+      name: nginx
+      state: present
+      update_cache: true
+    notify: restart nginx
+  - name: create file
+    lineinfile:
+      state: present
+      create: true
+      line: "{{ file_content }}"
+      path: "{{ file_path }}"

@@ -39,6 +39,12 @@
     copy:
       src: "{{ hostvars[inventory_hostname]['index_file'] }}.html"
       dest: /var/www/html/index.html
+    notify: restart nginx
+  - name: do something
+    debug:
+      msg: "foo"
+    notify: restart nginx
+  handlers:
   - name: restart nginx
     service:
       name: nginx

@@ -1,8 +1,9 @@
-- hosts: all
+- hosts: unzip_hosts
   become: true
   tasks:
-  - name: install nginx
-    apt:
-      pkg: nginx
-      state: present
-      update_cache: true
+  - name: do stuff
+    debug:
+      msg: "doing stuff..."
+  - name: dev role
+    import_role:
+      name: dev

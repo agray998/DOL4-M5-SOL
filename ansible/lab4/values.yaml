@@ -1,0 +1,5 @@
+user_name: adam
+repo_url: https://github.com/agray998/DOL4-M5-SOL
+package: apache2
+file_content: custom file content
+file_path: /home/ubuntu/file.txt
